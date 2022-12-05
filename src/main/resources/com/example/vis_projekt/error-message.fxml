@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="errorMessage" prefHeight="156.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fx:id="message" layoutX="29.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error message" textAlignment="CENTER" wrappingWidth="151.13671875" />
+   </children>
+</AnchorPane>

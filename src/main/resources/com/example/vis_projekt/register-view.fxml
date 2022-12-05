@@ -4,26 +4,31 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vis_projekt.RegisterViewController">
    <center>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="278.0" prefWidth="161.0" spacing="20.0" style="-fx-alignment: center-left; -fx-border-color: black; -fx-border-width: 1;" BorderPane.alignment="CENTER">
-         <children>
-            <TextField fx:id="name" layoutX="31.0" layoutY="71.0" promptText="Name*" />
-            <TextField fx:id="surName" layoutX="31.0" layoutY="93.0" promptText="SurName" />
-            <TextField fx:id="email" promptText="E-Mail*" />
-            <PasswordField fx:id="password" promptText="Password*" />
-            <PasswordField fx:id="passwordCheck" layoutX="31.0" layoutY="181.0" promptText="PasswordCheck*" />
-            <Button fx:id="register" alignment="CENTER" layoutX="30.0" layoutY="80.0" mnemonicParsing="false" onAction="#onRegisterButton" text="Register" />
-         </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
+      <AnchorPane fx:id="screenPane" prefHeight="252.0" prefWidth="344.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
-      </VBox>
+         <children>
+            <VBox layoutX="220.0" layoutY="61.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="278.0" prefWidth="161.0" spacing="20.0" style="-fx-alignment: center-left; -fx-border-color: black; -fx-border-width: 1;">
+               <children>
+                  <TextField fx:id="name" layoutX="31.0" layoutY="71.0" promptText="Name*" />
+                  <TextField fx:id="surName" layoutX="31.0" layoutY="93.0" promptText="SurName" />
+                  <TextField fx:id="email" promptText="E-Mail*" />
+                  <PasswordField fx:id="password" promptText="Password*" />
+                  <PasswordField fx:id="passwordCheck" layoutX="31.0" layoutY="181.0" promptText="PasswordCheck*" />
+                  <Button fx:id="register" alignment="CENTER" layoutX="30.0" layoutY="80.0" mnemonicParsing="false" onAction="#onRegisterButton" text="Register" />
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+         </children>
+      </AnchorPane>
    </center>
 </BorderPane>

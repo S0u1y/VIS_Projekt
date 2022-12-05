@@ -8,25 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserTM {
+    private String errorMessage = "";
 
     public User Register(int address, int store, String name, String surname, String email, String password){
-        if(isEmpty(name)){
-            System.out.println("Name cannot be blank!");
-            return null;
-        }
-        if(isEmpty(email) || !email.contains("@")){
-            System.out.println("Email cannot be blank!");
-            return null;
-        }
-        if(isEmpty(password)){
-            System.out.println("Password cannot be blank!");
-            return null;
-        }
+        if (!credentialsFine(name, email, password)) return null;
 
         User output = null;
         try(UserTDG gateway = new UserTDG()){
             if(gateway.findByEmail(email).next()){
-                System.out.println("User already existus!");
+                errorMessage = "Password cannot be blank!";
             }else{
                 gateway.createUser(address, store, name, surname, email, Encoding.Hash(password));
                 output = new User(name,surname,email);
@@ -36,14 +26,56 @@ public class UserTM {
         }
         return output;
     }
+    public User Register(int address, int store, String name, String surname, String email, String password, String passwordCheck){
+        if (!credentialsFine(name, email, password)) return null;
+        if(isEmpty(passwordCheck)){
+            errorMessage = "Password check cannot be blank!";
+            return null;
+        }
+        if(!passwordCheck.equals(password)){
+            errorMessage = "Passwords do not match!";
+            return null;
+        }
+
+        User output = null;
+        try(UserTDG gateway = new UserTDG()){
+            if(gateway.findByEmail(email).next()){
+                errorMessage = "User already exists!";
+            }else{
+                gateway.createUser(address, store, name, surname, email, Encoding.Hash(password));
+                output = new User(name,surname,email);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return output;
+    }
+
+    private boolean credentialsFine(String name, String email, String password) {
+        if(isEmpty(name)){
+            errorMessage = "Name cannot be blank!";
+            return false;
+        }
+        if(isEmpty(email) || !email.contains("@")){
+            errorMessage = "Email cannot be blank!";
+            return false;
+        }
+        if(isEmpty(password)){
+            errorMessage = "Password cannot be blank!";
+            return false;
+        }
+        return true;
+    }
+
+
     public User Login(String email, String pass){
         User output=null;
         if(isEmpty(email) || !email.contains("@")){
-            System.out.println("Email cannot be blank!");
+            errorMessage = "Email cannot be blank!";
             return null;
         }
         if(isEmpty(pass)){
-            System.out.println("Password cannot be blank!");
+            errorMessage = "Password cannot be blank!";
             return null;
         }
 
@@ -70,4 +102,7 @@ public class UserTM {
         return false;
     }
 
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 }
