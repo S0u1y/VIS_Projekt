@@ -14,7 +14,7 @@ import javafx.scene.layout.HBox;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class HelloController implements AppController{
+public class IndexController implements AppController{
 
     @FXML
     private BorderPane mainPane;

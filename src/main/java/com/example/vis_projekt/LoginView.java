@@ -38,7 +38,7 @@ public class LoginView implements AppController{
     private void onLoginButton(){
         MainClass.user = module.Login(email.getText(), password.getText());
         if(MainClass.user != null){
-            FXMLLoader root = SceneSwapperHandler.swapScenes(email.getScene(), getClass().getResource("hello-view.fxml"), "Index");
+            FXMLLoader root = SceneSwapperHandler.swapScenes(email.getScene(), getClass().getResource("index-view.fxml"), "Index");
         }else{
             password.setText("");
         }
