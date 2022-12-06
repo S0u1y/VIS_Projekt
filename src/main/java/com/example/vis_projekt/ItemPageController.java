@@ -55,4 +55,11 @@ public class ItemPageController implements AppController{
     public void startApp() {
 
     }
+
+    @FXML
+    private void onIndexButton(){
+        MainClass.onIndexButton(itemName);
+    }
+
+
 }

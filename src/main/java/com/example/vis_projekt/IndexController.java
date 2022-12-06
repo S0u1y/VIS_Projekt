@@ -89,4 +89,6 @@ public class IndexController implements AppController{
         SceneSwapperHandler.swapScenes(mainPane.getScene(), getClass().getResource("ItemPage-view.fxml"), items.get(id).getName(), items.get(id));
     }
 
+
+
 }
