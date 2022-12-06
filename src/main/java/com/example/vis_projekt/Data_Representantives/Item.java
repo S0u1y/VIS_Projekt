@@ -1,6 +1,8 @@
 package com.example.vis_projekt.Data_Representantives;
 
-public class Item {
+import java.util.ArrayList;
+
+public class Item extends Representantive{
 
     private int item_id;
     private int user_id;
@@ -8,12 +10,27 @@ public class Item {
     private double price;
     private String description;
 
+    ArrayList<Option_type> options = new ArrayList<>();
+
     public Item() {
         item_id = -1;
         user_id = -1;
+        id = item_id;
     }
 
     public Item(String name, double price, String description) {
+        item_id = -1;
+        user_id = -1;
+        id = item_id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+    }
+
+    public Item(int item_id, int user_id, String name, double price, String description) {
+        this.item_id = item_id;
+        this.user_id = user_id;
+        id = item_id;
         this.name = name;
         this.price = price;
         this.description = description;
@@ -42,4 +59,9 @@ public class Item {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public void loadOptions(){
+
+    }
+
 }

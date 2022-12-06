@@ -50,24 +50,6 @@ public class UserTM {
         }
         return output;
     }
-
-    private boolean credentialsFine(String name, String email, String password) {
-        if(isEmpty(name)){
-            errorMessage = "Name cannot be blank!";
-            return false;
-        }
-        if(isEmpty(email) || !email.contains("@")){
-            errorMessage = "Email cannot be blank!";
-            return false;
-        }
-        if(isEmpty(password)){
-            errorMessage = "Password cannot be blank!";
-            return false;
-        }
-        return true;
-    }
-
-
     public User Login(String email, String pass){
         User output=null;
         if(isEmpty(email) || !email.contains("@")){
@@ -93,6 +75,21 @@ public class UserTM {
             throw new RuntimeException(e);
         }
         return output;
+    }
+    private boolean credentialsFine(String name, String email, String password) {
+        if(name != null && isEmpty(name)){
+            errorMessage = "Name cannot be blank!";
+            return false;
+        }
+        if(email != null && isEmpty(email) || !email.contains("@")){
+            errorMessage = "Email cannot be blank!";
+            return false;
+        }
+        if(password != null && isEmpty(password)){
+            errorMessage = "Password cannot be blank!";
+            return false;
+        }
+        return true;
     }
 
     private boolean isEmpty(String string){

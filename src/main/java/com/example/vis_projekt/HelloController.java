@@ -1,6 +1,9 @@
 package com.example.vis_projekt;
 
-import com.example.vis_projekt.Data_Representantives.User;
+import com.example.vis_projekt.Data_Access.ItemTDG;
+import com.example.vis_projekt.Data_Representantives.Item;
+import com.example.vis_projekt.Object_relations.IdentityMap;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -8,11 +11,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-public class HelloController {
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class HelloController implements AppController{
 
     @FXML
     private BorderPane mainPane;
-
     @FXML
     private HBox topPanel;
     @FXML
@@ -27,9 +32,48 @@ public class HelloController {
     private Button cartButton;
     @FXML
     private Button previousButton, nextButton;
+    @FXML
+    private Button templateButton0;
+
+    private IdentityMap<Item> items = MainClass.getItems();
+
+    private int currentPage = 1;
+
+    @Override
+    public void startAppInternal(Object object) {
+
+    }
 
     public void startApp() {
         //load n amount of items and shove them into itemsGrid
+
+        try(ItemTDG gateway = new ItemTDG()){
+            ResultSet rs = gateway.getAll();
+            while(rs.next()){
+                items.add(new Item(
+                                    rs.getInt("Item_ID"),
+                                    rs.getInt("User_ID"),
+                                    rs.getString("Name"),
+                                    rs.getDouble("Price"),
+                                    rs.getString("Description")
+                                    )
+                            );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        for(int i = 0; i < itemsGrid.getRowCount(); i++){
+            for(int j = 0; j < itemsGrid.getColumnCount(); j++){
+                int index = itemsGrid.getColumnCount() * i + j;
+                Item found = items.get(currentPage * (index+1));
+                if(found != null){
+                    Button btn = (Button)itemsGrid.getChildren().get(index);
+                    btn.setText(found.getName());
+                    btn.setId(""+found.getId());
+                    btn.setVisible(true);
+                }
+            }
+        }
 
     }
 
@@ -46,5 +90,10 @@ public class HelloController {
         }
     }
 
+    @FXML
+    private void onItemSelected(ActionEvent e){
+        int id = Integer.parseInt(((Button)(e.getTarget())).getId());
+        SceneSwapperHandler.swapScenes(mainPane.getScene(), getClass().getResource("ItemPage-view.fxml"), items.get(id).getName(), items.get(id));
+    }
 
 }

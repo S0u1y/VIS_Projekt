@@ -1,10 +1,9 @@
 package com.example.vis_projekt;
 
-import com.example.vis_projekt.Data_Representantives.User;
+import com.example.vis_projekt.Data_Access.OptionTDG;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,7 +22,11 @@ public class HelloApplication extends Application {
 
         controller = fxmlLoader.getController();
         controller.startApp();
-        System.out.println("test!");
+
+        try(OptionTDG gateway = new OptionTDG()){
+            gateway.create(1,75,"30cm");
+        }
+
     }
 
     public static void main(String[] args) {

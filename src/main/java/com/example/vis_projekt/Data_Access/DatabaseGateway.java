@@ -3,9 +3,15 @@ package com.example.vis_projekt.Data_Access;
 import java.io.Closeable;
 import java.sql.*;
 
-public abstract class DatabaseGateway implements Closeable {
+public class DatabaseGateway implements Closeable {
 
     private String URL;
+    protected String tableName;
+    protected String CREATE;
+    protected String FIND_BY_ID;
+    protected String UPDATE;
+    protected String DELETE;
+
 
     public DatabaseGateway(String URL) {
         this.URL = URL;
@@ -27,6 +33,10 @@ public abstract class DatabaseGateway implements Closeable {
             Statement statement = connection.createStatement();
             return statement.executeQuery(sql);
         } catch (SQLException e) {
+            if(e.getErrorCode() == 101){//sometimes queries don't return anything (insert, update, ..)
+                return null;
+            }
+            System.out.println(e.getErrorCode());
             System.out.println(e.getMessage());
         }
         return null;
@@ -40,6 +50,17 @@ public abstract class DatabaseGateway implements Closeable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+    public void constructStrings(){
+        FIND_BY_ID = "SELECT %s from "+tableName+" where %s = ";
+        CREATE = "INSERT into "+tableName+"%s";
+        UPDATE = "UPDATE "+tableName+" SET %s";
+        DELETE = "DELETE from "+tableName+" where %s = ";
     }
 
 }

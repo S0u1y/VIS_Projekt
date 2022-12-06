@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class RegisterViewController {
+public class RegisterViewController implements AppController{
 
     @FXML
     private Pane screenPane;
@@ -63,5 +63,15 @@ public class RegisterViewController {
             throw new RuntimeException(e);
         }
         return errorPane;
+    }
+
+    @Override
+    public void startAppInternal(Object object) {
+
+    }
+
+    @Override
+    public void startApp() {
+
     }
 }

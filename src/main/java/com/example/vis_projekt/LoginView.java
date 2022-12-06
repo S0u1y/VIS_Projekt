@@ -2,11 +2,13 @@ package com.example.vis_projekt;
 
 import com.example.vis_projekt.Domain_Logic.UserTM;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class LoginView {
+public class LoginView implements AppController{
 
     @FXML
     private TextField email;
@@ -19,7 +21,12 @@ public class LoginView {
 
     private UserTM module = new UserTM();
 
-    public void beginApp(){
+    @Override
+    public void startAppInternal(Object object) {
+
+    }
+
+    public void startApp(){
     }
 
     @FXML
@@ -31,7 +38,7 @@ public class LoginView {
     private void onLoginButton(){
         MainClass.user = module.Login(email.getText(), password.getText());
         if(MainClass.user != null){
-            SceneSwapperHandler.swapScenes(email.getScene(), getClass().getResource("hello-view.fxml"), "Index");
+            FXMLLoader root = SceneSwapperHandler.swapScenes(email.getScene(), getClass().getResource("hello-view.fxml"), "Index");
         }else{
             password.setText("");
         }
