@@ -48,16 +48,9 @@ public class IndexController implements AppController{
         //load n amount of items and shove them into itemsGrid
 
         try(ItemTDG gateway = new ItemTDG()){
-            ResultSet rs = gateway.getAll();
+            ResultSet rs = gateway.getAllNames();
             while(rs.next()){
-                items.add(new Item(
-                                    rs.getInt("Item_ID"),
-                                    rs.getInt("User_ID"),
-                                    rs.getString("Name"),
-                                    rs.getDouble("Price"),
-                                    rs.getString("Description")
-                                    )
-                            );
+                items.add(new Item(rs.getInt("Item_ID"),rs.getString("Name")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -1,5 +1,7 @@
 package com.example.vis_projekt;
 
+import com.example.vis_projekt.Data_Access.ItemTDG;
+import com.example.vis_projekt.Data_Access.OptionTDG;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,10 +23,6 @@ public class Main extends Application {
 
         controller = fxmlLoader.getController();
         controller.startApp();
-
-//        try(OptionTDG gateway = new OptionTDG()){
-//            gateway.create(1,75,"30cm");//75 = 75,000 !!!
-//        }
 
     }
 

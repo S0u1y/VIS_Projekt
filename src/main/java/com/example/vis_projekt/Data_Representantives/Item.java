@@ -36,6 +36,12 @@ public class Item extends Representantive{
         this.description = description;
     }
 
+    public Item(int item_id, String name) {
+        this.item_id = item_id;
+        id = item_id;
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

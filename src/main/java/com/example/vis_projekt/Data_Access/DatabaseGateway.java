@@ -2,7 +2,9 @@ package com.example.vis_projekt.Data_Access;
 
 import java.io.Closeable;
 import java.sql.*;
+import java.util.Objects;
 
+//Supertype for gateways
 public class DatabaseGateway implements Closeable {
 
     private String URL;
@@ -41,6 +43,43 @@ public class DatabaseGateway implements Closeable {
         }
         return null;
     }
+    protected ResultSet executeQuery(String sql, Object ... args){
+        connection = connect();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int i = 1;
+            for(Object object : args){
+                if(object instanceof Integer integer){
+                    statement.setInt(i, integer);
+                } else if (object instanceof Double dubl) {
+                    statement.setDouble(i, dubl);
+                } else if (object instanceof String string) {
+                    statement.setString(i, string);
+                }else{
+                    System.out.println("Instance does not fall within bounds.");
+                    return null;
+                }
+                i++;
+            }
+            if(sql.equals(CREATE) || sql.equals(UPDATE) || sql.equals(DELETE)){
+                statement.executeUpdate();
+                return null;
+            }else{
+                return statement.executeQuery();
+            }
+
+
+        } catch (SQLException e) {
+            if(e.getErrorCode() == 0){//sometimes queries don't return anything (insert, update, ..)
+                return null;
+            }
+            System.out.println(e.getErrorCode());
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+
 
     public void close(){
         try {

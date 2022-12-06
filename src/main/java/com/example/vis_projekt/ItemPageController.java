@@ -31,9 +31,11 @@ public class ItemPageController implements AppController{
             if(item.getPrice() == 0 || item.getDescription() == null){
                 try(ItemTDG gateway = new ItemTDG()){
                     ResultSet rs = gateway.findPriceAndDescription(item.getId());
-                    if(rs.next()){
-                        item.setDescription(rs.getString("Description"));
-                        item.setPrice(rs.getDouble("Price"));
+                    if(rs != null){
+                        if(rs.next()){
+                            item.setDescription(rs.getString("Description"));
+                            item.setPrice(rs.getDouble("Price"));
+                        }
                     }
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
