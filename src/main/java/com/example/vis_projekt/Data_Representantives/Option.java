@@ -7,6 +7,10 @@ public class Option {
     private String description;
     private double price;
 
+    public Option() {
+        option_id = -1;
+    }
+
     public Option(int option_id, int option_type_id, String description, double price) {
         this.option_id = option_id;
         this.option_type_id = option_type_id;

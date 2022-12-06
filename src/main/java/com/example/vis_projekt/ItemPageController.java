@@ -3,7 +3,11 @@ package com.example.vis_projekt;
 import com.example.vis_projekt.Data_Access.ItemTDG;
 import com.example.vis_projekt.Data_Representantives.Item;
 import com.example.vis_projekt.Data_Representantives.Option;
+import com.example.vis_projekt.Data_Representantives.Option_type;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -11,6 +15,7 @@ import javafx.scene.text.Text;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ItemPageController implements AppController{
     @FXML
@@ -23,6 +28,7 @@ public class ItemPageController implements AppController{
     private VBox sideBox;
 
     private Item item;
+    private double priceIncrement = 0;
 
     @Override
     public void startAppInternal(Object object) {
@@ -44,10 +50,35 @@ public class ItemPageController implements AppController{
             itemName.setText(item.getName());
             priceLabel.setText("Price: "+item.getPrice());
             descriptionLabel.setText(item.getDescription());
+
+            if(item.getOptions() == null || item.getOptions().isEmpty()){
+                item.loadOptionTypes();
+                item.loadOptions();
+            }
+            for(Option_type type : item.getOptions()){
+                ComboBox<Option> box = new ComboBox<>();
+                box.getItems().add(new Option());
+                box.setPromptText(type.getDescription());
+                for(Option option : type.getOptions()){
+                    box.getItems().add(option);
+                }
+
+                box.setOnAction(event -> {
+
+                    if(box.getValue().toString() == null || box.getValue().toString().isEmpty()){
+                        priceIncrement = 0;
+                    }else{
+                        priceIncrement = box.getValue().getPrice();
+                    }
+                    priceLabel.setText("Price: " + (item.getPrice() + priceIncrement));
+                });
+
+                sideBox.getChildren().add(2,box);
+            }
         }
-        ComboBox<Option> box = new ComboBox<>();
-        box.getItems().add(new Option(-1,-1,"much cool  25", 25));
-        sideBox.getChildren().add(2,box);
+
+
+
 
     }
 
@@ -58,6 +89,7 @@ public class ItemPageController implements AppController{
 
     @FXML
     private void onIndexButton(){
+
         MainClass.onIndexButton(itemName);
     }
 

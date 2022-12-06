@@ -45,4 +45,10 @@ public class LoginView implements AppController{
 
     }
 
+    @FXML
+    private void onIndexButton(){
+        MainClass.onIndexButton(email);
+    }
+
+
 }

@@ -1,5 +1,10 @@
 package com.example.vis_projekt.Data_Representantives;
 
+import com.example.vis_projekt.Data_Access.OptionTDG;
+import com.example.vis_projekt.Data_Access.Option_typeTDG;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Item extends Representantive{
@@ -66,8 +71,36 @@ public class Item extends Representantive{
         this.description = description;
     }
 
-    public void loadOptions(){
+    public ArrayList<Option_type> getOptions() {
+        return options;
+    }
 
+    public void loadOptionTypes(){
+        try(Option_typeTDG gateway = new Option_typeTDG()){
+            ResultSet rs = gateway.findByItemID(this.item_id);
+            if(rs != null){
+                while(rs.next()){
+                    options.add(new Option_type(rs.getInt("Option_type_ID"), this.item_id, rs.getString("Name")));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadOptions(){
+        try(OptionTDG gateway = new OptionTDG()){
+
+            for(Option_type type : options){
+                ResultSet rs = gateway.findByOptionTypeID(type.getCategory_id());
+                while(rs.next()){
+                    type.addOption(new Option(rs.getInt("Option_ID"), type.getCategory_id(), rs.getString("Description"), rs.getDouble("Price")));
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
