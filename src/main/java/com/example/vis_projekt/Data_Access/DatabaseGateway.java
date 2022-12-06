@@ -44,7 +44,7 @@ public class DatabaseGateway implements Closeable {
 
     public void close(){
         try {
-            if(!this.connection.isClosed()){
+            if(this.connection != null && !this.connection.isClosed()){
                 connection.close();
             }
         } catch (SQLException e) {

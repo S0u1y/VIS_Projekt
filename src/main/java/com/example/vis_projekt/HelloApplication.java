@@ -24,7 +24,7 @@ public class HelloApplication extends Application {
         controller.startApp();
 
         try(OptionTDG gateway = new OptionTDG()){
-            gateway.create(1,75,"30cm");
+            gateway.create(1,75,"30cm");//75 = 75,000 !!!
         }
 
     }

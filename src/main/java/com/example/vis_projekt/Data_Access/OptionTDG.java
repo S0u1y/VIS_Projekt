@@ -10,7 +10,7 @@ public class OptionTDG extends TableDataGateway{
         DELETE = "Delete from Option where Option_ID = %d";
     }
     public void create(int option_type_id, double price, String description){
-        executeQuery(String.format(CREATE, option_type_id, price, description));
+        System.out.println(String.format(CREATE, option_type_id, price, description));
     }
 
     public ResultSet find(int id){
