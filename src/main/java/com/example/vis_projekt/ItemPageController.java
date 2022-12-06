@@ -15,6 +15,9 @@ import javafx.scene.text.Text;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ItemPageController implements AppController{
@@ -28,7 +31,8 @@ public class ItemPageController implements AppController{
     private VBox sideBox;
 
     private Item item;
-    private double priceIncrement = 0;
+
+    private double currentPrice = 0;
 
     @Override
     public void startAppInternal(Object object) {
@@ -59,18 +63,27 @@ public class ItemPageController implements AppController{
                 ComboBox<Option> box = new ComboBox<>();
                 box.getItems().add(new Option());
                 box.setPromptText(type.getDescription());
+
                 for(Option option : type.getOptions()){
                     box.getItems().add(option);
                 }
 
                 box.setOnAction(event -> {
 
-                    if(box.getValue().toString() == null || box.getValue().toString().isEmpty()){
-                        priceIncrement = 0;
-                    }else{
-                        priceIncrement = box.getValue().getPrice();
+                    for(Node node : sideBox.getChildren()){
+                        if(node instanceof ComboBox<?> check){
+                            if(check.getValue() == null && check.getId() != null){
+                                currentPrice -= Double.parseDouble(check.getId());
+                            }else{
+                                if(check.getId() != null && check == box){
+                                    currentPrice -= Double.parseDouble(box.getId());
+                                }
+                            }
+                        }
                     }
-                    priceLabel.setText("Price: " + (item.getPrice() + priceIncrement));
+                    currentPrice += box.getValue().getPrice();
+                    box.setId(""+box.getValue().getPrice());
+                    priceLabel.setText("Price: " + (item.getPrice() + currentPrice));
                 });
 
                 sideBox.getChildren().add(2,box);
