@@ -24,6 +24,8 @@ public class ItemPageController implements AppController{
     @FXML
     private Label itemName;
     @FXML
+    private Label starsAVG;
+    @FXML
     private Label priceLabel;
     @FXML
     private Text descriptionLabel;
@@ -102,9 +104,38 @@ public class ItemPageController implements AppController{
 
     @FXML
     private void onIndexButton(){
-
         MainClass.onIndexButton(itemName);
     }
 
+    @FXML
+    private void onPurchaseButton(){
+        Item purchased = new Item(item.getItem_id(), item.getUser_id(), item.getName(), item.getPrice(), item.getDescription());
+        for(Node node : sideBox.getChildren()){
+            if(node instanceof ComboBox<?> box){
+                if(box.getValue() != null && box.getId() != null){
+                    Option option = (Option)box.getValue();
+                    Option_type type = new Option_type(option.option_type_id(), item.getId(), box.getPromptText());
+                    type.addOption(option);
+                    purchased.getOptions().add(type);
+                }
+            }
+        }
+        if(MainClass.cart == null) MainClass.cart = new Cart();
+        MainClass.cart.addItem(purchased);
+    }
+
+    @FXML
+    private void onCartButton(){
+        MainClass.onCartButton(itemName);
+    }
+
+    @FXML
+    private void onAccountClicked(){
+        if(MainClass.user == null){
+            SceneSwapperHandler.swapScenes(itemName.getScene(), getClass().getResource("login-view.fxml"), "Login");
+        }else{
+
+        }
+    }
 
 }

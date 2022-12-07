@@ -4,41 +4,63 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane hbarPolicy="NEVER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vis_projekt.ItemPageController">
-   <content>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0">
-         <children>
-            <AnchorPane layoutX="83.0" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: lightgray;" />
-            <VBox fx:id="sideBox" layoutX="413.0" layoutY="56.0" maxWidth="-Infinity" prefHeight="200.0" prefWidth="154.0" spacing="15.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vis_projekt.ItemPageController">
+   <center>
+      <ScrollPane hbarPolicy="NEVER">
+         <content>
+            <AnchorPane prefHeight="369.0" prefWidth="600.0">
                <children>
-                  <Label fx:id="itemName" alignment="CENTER" prefHeight="92.0" prefWidth="155.0" style="-fx-border-color: lightgray;" text="Label" />
-                  <Label fx:id="priceLabel" ellipsisString="" prefHeight="19.0" prefWidth="154.0" style="-fx-border-color: lightgray;" text="Price: " />
-                  <Text fx:id="descriptionLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Desc" textAlignment="CENTER" wrappingWidth="114.32421875" />
-               </children>
-            </VBox>
-            <BorderPane layoutX="83.0" layoutY="242.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="202.0" style="-fx-border-color: lightgray;">
-               <center>
+                  <AnchorPane layoutX="83.0" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: lightgray;" />
+                  <VBox fx:id="sideBox" layoutX="413.0" layoutY="56.0" maxWidth="-Infinity" prefHeight="200.0" prefWidth="154.0" spacing="15.0">
+                     <children>
+                        <Label fx:id="itemName" alignment="CENTER" prefHeight="92.0" prefWidth="155.0" style="-fx-border-color: lightgray;" text="Label" />
+                        <Label fx:id="priceLabel" ellipsisString="" prefHeight="19.0" prefWidth="154.0" style="-fx-border-color: lightgray;" text="Price: " />
+                        <Button maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPurchaseButton" style="-fx-background-color: black;" text="Purchase" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Button>
+                        <Text fx:id="descriptionLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Desc" textAlignment="CENTER" wrappingWidth="153.32421875" />
+                     </children>
+                  </VBox>
+                  <BorderPane layoutX="83.0" layoutY="242.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="202.0" style="-fx-border-color: lightgray;">
+                     <center>
                   
                </center>
-               <center>
-                  <ImageView fx:id="ratingStars" fitHeight="26.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-                     <BorderPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" />
-                     </BorderPane.margin>
-                  </ImageView>
-               </center>
-               <padding>
-                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-               </padding>
-            </BorderPane>
-            <Button fx:id="indexButton" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onIndexButton" text="Index" />
+                     <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </padding>
+                     <center>
+                        <Label fx:id="starsAVG" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Stars" textAlignment="CENTER" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </center>
+   <top>
+      <HBox fx:id="topPanel" spacing="20.0">
+         <children>
+            <Button fx:id="indexButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onIndexButton" text="Index" />
+            <TextField fx:id="searchBar" />
+            <Button fx:id="accountButton" mnemonicParsing="false" onAction="#onAccountClicked" text="Account" />
+            <Button fx:id="cartButton" mnemonicParsing="false" onAction="#onCartButton" text="Cart" />
          </children>
-      </AnchorPane>
-   </content>
-</ScrollPane>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </HBox>
+   </top>
+</BorderPane>

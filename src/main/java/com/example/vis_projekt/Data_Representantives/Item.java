@@ -75,6 +75,18 @@ public class Item extends Representantive{
         return options;
     }
 
+    public void setOptions(ArrayList<Option_type> options) {
+        this.options = options;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public int getItem_id() {
+        return item_id;
+    }
+
     public void loadOptionTypes(){
         try(Option_typeTDG gateway = new Option_typeTDG()){
             ResultSet rs = gateway.findByItemID(this.item_id);

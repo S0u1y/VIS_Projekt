@@ -86,7 +86,8 @@ public class IndexController implements AppController{
     @FXML
     private void onItemSelected(ActionEvent e){
         int id = Integer.parseInt(((Button)(e.getTarget())).getId());
-        SceneSwapperHandler.swapScenes(mainPane.getScene(), getClass().getResource("ItemPage-view.fxml"), items.get(id).getName(), items.get(id));
+        Item selected = items.get(id);
+        SceneSwapperHandler.swapScenes(mainPane.getScene(), getClass().getResource("ItemPage-view.fxml"), selected.getName(), selected);
     }
 
 

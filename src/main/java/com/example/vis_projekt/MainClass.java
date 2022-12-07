@@ -9,6 +9,9 @@ import javafx.scene.Node;
 public class MainClass {
     public static User user = null;
     private static IdentityMap<Item> items = new IdentityMap<>();
+
+    public static Cart cart = null;
+
     public MainClass(User user) {
         this.user = user;
     }
@@ -27,6 +30,10 @@ public class MainClass {
 
     public static void onIndexButton(Node node){
         SceneSwapperHandler.swapScenes(node.getScene(), MainClass.class.getResource("index-view.fxml"), "Index");
+    }
+
+    public static void onCartButton(Node node){
+        SceneSwapperHandler.swapScenes(node.getScene(), MainClass.class.getResource("cart-view.fxml"), "Cart");
     }
 
 }

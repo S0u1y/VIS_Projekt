@@ -75,6 +75,7 @@ public class SceneSwapperHandler {
 
             return loader;
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }
