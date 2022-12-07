@@ -27,18 +27,23 @@ public class CartViewController implements AppController{
 
     @Override
     public void startApp() {
-        ArrayList<Item> items = MainClass.cart.getItems();
-        for(int i = 0; i < items.size(); i++){
-            if(i > itemsGrid.getChildren().size()){
-                itemsGrid.addRow(i);
+        if(MainClass.cart != null){
+            ArrayList<Item> items = MainClass.cart.getItems();
+            for(int i = 0; i < items.size(); i++){
+                if(i > itemsGrid.getChildren().size()){
+                    itemsGrid.addRow(i);
+                }
+                if(itemsGrid.getChildren().get(i) != null){
+                    Label label = (Label)itemsGrid.getChildren().get(i);
+                    label.setText(items.get(i).getName());
+                    label.setVisible(true);
+                }
             }
-            if(itemsGrid.getChildren().get(i) != null){
-                Label label = (Label)itemsGrid.getChildren().get(i);
-                label.setText(items.get(i).getName());
-                label.setVisible(true);
-            }
+            priceLabel.setText("Price: "+ MainClass.cart.calculatePrice());
+        }else {
+            priceLabel.setText("No Items picked.");
         }
-        priceLabel.setText("Price: "+ MainClass.cart.calculatePrice());
+
 
     }
 

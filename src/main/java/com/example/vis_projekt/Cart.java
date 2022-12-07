@@ -3,6 +3,7 @@ package com.example.vis_projekt;
 import com.example.vis_projekt.Data_Representantives.Item;
 import com.example.vis_projekt.Data_Representantives.Option;
 import com.example.vis_projekt.Data_Representantives.Option_type;
+import com.example.vis_projekt.Object_relations.PaymentUOW;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,10 @@ public class Cart {
 
 
     private double totalPrice;
-    ArrayList<Item> items = new ArrayList<>();
+    private double coupon = 1;
+    private ArrayList<Item> items = new ArrayList<>();
+
+    private PaymentUOW uow = new PaymentUOW();
 
     public double getTotalPrice() {
         return totalPrice;
@@ -42,7 +46,11 @@ public class Cart {
                 }
             }
         }
-        return output;
+        return output * coupon;
+    }
+
+    public void addCoupon(double amount){//amount in %
+        coupon -= amount/100;
     }
 
     public void checkout(){

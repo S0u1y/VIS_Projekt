@@ -5,6 +5,7 @@ import com.example.vis_projekt.Data_Representantives.Item;
 import com.example.vis_projekt.Object_relations.IdentityMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -90,6 +91,9 @@ public class IndexController implements AppController{
         SceneSwapperHandler.swapScenes(mainPane.getScene(), getClass().getResource("ItemPage-view.fxml"), selected.getName(), selected);
     }
 
-
+    @FXML
+    private void onCartButton(){
+        MainClass.onCartButton(mainPane);
+    }
 
 }

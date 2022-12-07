@@ -67,7 +67,7 @@
             <Button fx:id="indexButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Index" />
             <TextField fx:id="searchBar" />
             <Button fx:id="accountButton" mnemonicParsing="false" onAction="#onAccountClicked" text="Account" />
-            <Button fx:id="cartButton" mnemonicParsing="false" text="Cart" />
+            <Button fx:id="cartButton" mnemonicParsing="false" onAction="#onCartButton" text="Cart" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
