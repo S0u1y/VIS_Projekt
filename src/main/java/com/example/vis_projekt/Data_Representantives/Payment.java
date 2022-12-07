@@ -16,6 +16,14 @@ public class Payment {
         this.date = date;
     }
 
+    public Payment(int user_id, int item_id, double price, String date) {
+        payment_id = -1;
+        this.user_id = user_id;
+        this.item_id = item_id;
+        this.price = price;
+        this.date = date;
+    }
+
     public int getPayment_id() {
         return payment_id;
     }
@@ -26,6 +34,14 @@ public class Payment {
 
     public int getItem_id() {
         return item_id;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public void setUser_id(int user_id) {

@@ -1,6 +1,8 @@
 package com.example.vis_projekt.Data_Access;
 
 
+import com.example.vis_projekt.DateMethods;
+
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,14 +21,14 @@ public class PaymentTDG extends TableDataGateway{
     }
 
     public void create(int user_id, int item_id, double price){
-        executeQuery(CREATE, user_id, item_id, price, getDate());
+        executeQuery(CREATE, user_id, item_id, price, DateMethods.getDate());
     }
 
     public ResultSet find(int id){
         return executeQuery(FIND_BY_ID, id);
     }
 
-    public void Update(int user_id, int item_id, double price, String date, int id){
+    public void update(int user_id, int item_id, double price, String date, int id){
         executeQuery(UPDATE, user_id, item_id, price, date, id);
     }
 
@@ -46,10 +48,6 @@ public class PaymentTDG extends TableDataGateway{
         return executeQuery(FIND_BY_USER_AND_ITEM, user_id, item_id);
     }
 
-    private String getDate(){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date date = new Date();
-        return formatter.format(date);
-    }
+
 
 }
