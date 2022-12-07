@@ -8,8 +8,8 @@ import java.util.Objects;
 public class DatabaseGateway implements Closeable {
 
     private String URL;
-    protected String tableName;
     protected String CREATE;
+    protected String SELECT;
     protected String FIND_BY_ID;
     protected String UPDATE;
     protected String DELETE;
@@ -89,17 +89,6 @@ public class DatabaseGateway implements Closeable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
-    public void constructStrings(){
-        FIND_BY_ID = "SELECT %s from "+tableName+" where %s = ";
-        CREATE = "INSERT into "+tableName+"%s";
-        UPDATE = "UPDATE "+tableName+" SET %s";
-        DELETE = "DELETE from "+tableName+" where %s = ";
     }
 
 }

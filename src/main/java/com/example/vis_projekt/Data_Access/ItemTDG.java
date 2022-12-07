@@ -2,20 +2,18 @@ package com.example.vis_projekt.Data_Access;
 
 import java.sql.ResultSet;
 
-public class ItemTDG extends DatabaseGateway{
+public class ItemTDG extends TableDataGateway{
 
     private final String FIND_PRICE = "Select Price from Item where Item_ID = ?";
     private final String FIND_DESCRIPTION = "Select Description from Item where Item_ID = ?";
     private final String FIND_P_D = "Select Price, Description from Item where Item_ID = ?";
 
     public ItemTDG() {
-        super("jdbc:sqlite:.//Project_DB.db");
-        tableName = "Item";
-        constructStrings();
-        CREATE = String.format(CREATE, "(User_ID, Name, Price, Description) values(?, ?, ?, ?)");
-        FIND_BY_ID = String.format(FIND_BY_ID, "*", "Item_ID")+"?";
-        UPDATE = String.format(UPDATE, "User_ID = ?, Name = ?, Price = ?, Description = ? where Item_ID = ?");
-        DELETE = String.format(DELETE, "Item_ID")+"?";
+        super();
+        CREATE = "Insert into Item(User_ID, Name, Price, Description) values(?, ?, ?, ?)";
+        FIND_BY_ID = "Select * from Item where Item_ID = ?";
+        UPDATE = "Update Item set User_ID = ?, Name = ?, Price = ?, Description = ? where Item_ID = ?";
+        DELETE = "Delete from Item where Item_ID = ?";
     }
 
 

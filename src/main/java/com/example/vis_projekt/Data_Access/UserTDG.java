@@ -2,7 +2,7 @@ package com.example.vis_projekt.Data_Access;
 
 import java.sql.ResultSet;
 
-public class UserTDG extends DatabaseGateway{
+public class UserTDG extends TableDataGateway{
 
     private final String FIND_USER_BY_ID = "Select * from User where User_ID = %d";
     private final String CREATE_USER = "INSERT into User(Address_ID, Store_ID, Name, Surname, Email, Password, Permissions) values(%d, %d, '%s', '%s', '%s', '%s', 0)";
@@ -10,12 +10,8 @@ public class UserTDG extends DatabaseGateway{
     private final String DELETE_USER = "delete from User where User_ID = %d";
     private final String FIND_USER_BY_EMAIL = "Select * from User where Email = '%s'";
 
-
-    public UserTDG(String URL) {
-        super(URL);
-    }
-    public UserTDG() {
-        super("jdbc:sqlite:.//Project_DB.db");
+    public UserTDG(){
+        super();
     }
 
     public void createUser(int address, int store, String name, String surname, String email, String password){

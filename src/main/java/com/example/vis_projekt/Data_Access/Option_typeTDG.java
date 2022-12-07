@@ -2,14 +2,14 @@ package com.example.vis_projekt.Data_Access;
 
 import java.sql.ResultSet;
 
-public class Option_typeTDG extends DatabaseGateway{
-    private final String CREATE = "Insert into Option_type(Item_ID, Name) Values(?, ?)";
-    private final String SELECT = "Select * from Option_type where Option_type_ID = ?";
-    private final String UPDATE = "Update Option_type set Item_ID = ?, Name = ?, Price = ? where Option_type_ID = ?";
-    private final String DELETE = "Delete from Option_type where Option_type_ID = ?";
+public class Option_typeTDG extends TableDataGateway{
 
     public Option_typeTDG() {
-        super("jdbc:sqlite:.//Project_DB.db");
+        super();
+        CREATE = "Insert into Option_type(Item_ID, Name) Values(?, ?)";
+        SELECT = "Select * from Option_type where Option_type_ID = ?";
+        UPDATE = "Update Option_type set Item_ID = ?, Name = ?, Price = ? where Option_type_ID = ?";
+        DELETE = "Delete from Option_type where Option_type_ID = ?";
     }
 
     public void create(int item_id, String name){
