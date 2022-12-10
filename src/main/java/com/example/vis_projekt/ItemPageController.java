@@ -5,10 +5,7 @@ import com.example.vis_projekt.Data_Representantives.Item;
 import com.example.vis_projekt.Data_Representantives.Option;
 import com.example.vis_projekt.Data_Representantives.Option_type;
 import com.example.vis_projekt.Domain_Logic.ItemTM;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -16,10 +13,6 @@ import javafx.scene.text.Text;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ItemPageController implements AppController{
     @FXML
@@ -61,11 +54,7 @@ public class ItemPageController implements AppController{
             descriptionLabel.setText(item.getDescription());
 
             if(item.getOptions() == null || item.getOptions().isEmpty()){
-                item.loadOptionTypes();
-                item.loadOptions();
-                for(Option_type type : item.getOptions()){
-                    type.getOptions().add(0, new Option());
-                }
+                itemModule.loadItemOptions(item);
             }
             for(Option_type type : item.getOptions()){
                 ComboBox<Option> box = new ComboBox<>();

@@ -2,7 +2,6 @@ package com.example.vis_projekt;
 
 import com.example.vis_projekt.Data_Representantives.Item;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -39,6 +38,7 @@ public class CartViewController implements AppController{
                     label.setVisible(true);
                 }
             }
+            //cart calculates full price
             priceLabel.setText("Price: "+ MainClass.cart.calculatePrice());
         }else {
             priceLabel.setText("No Items picked.");

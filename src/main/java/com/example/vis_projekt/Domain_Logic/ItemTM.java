@@ -1,6 +1,8 @@
 package com.example.vis_projekt.Domain_Logic;
 
 import com.example.vis_projekt.Cart;
+import com.example.vis_projekt.Data_Access.OptionTDG;
+import com.example.vis_projekt.Data_Access.Option_typeTDG;
 import com.example.vis_projekt.Data_Representantives.Item;
 import com.example.vis_projekt.Data_Representantives.Option;
 import com.example.vis_projekt.Data_Representantives.Option_type;
@@ -9,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ItemTM {
@@ -47,5 +51,38 @@ public class ItemTM {
 
         return output;
     }
+
+    public void loadItemOptions(Item item){
+
+        try(Option_typeTDG gateway = new Option_typeTDG()){
+            ResultSet rs = gateway.findByItemID(item.getItem_id());
+            if(rs != null){
+                while(rs.next()){
+                    item.getOptions().add(new Option_type(rs.getInt("Option_type_ID"), item.getItem_id(), rs.getString("Name")));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try(OptionTDG gateway = new OptionTDG()){
+
+            for(Option_type type : item.getOptions()){
+                ResultSet rs = gateway.findByOptionTypeID(type.getCategory_id());
+                while(rs.next()){
+                    type.addOption(new Option(rs.getInt("Option_ID"), type.getCategory_id(), rs.getString("Description"), rs.getDouble("Price")));
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        for(Option_type type : item.getOptions()){
+            type.getOptions().add(0, new Option());
+        }
+
+    }
+
 
 }

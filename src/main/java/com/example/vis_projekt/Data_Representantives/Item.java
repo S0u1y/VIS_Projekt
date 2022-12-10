@@ -1,10 +1,5 @@
 package com.example.vis_projekt.Data_Representantives;
 
-import com.example.vis_projekt.Data_Access.OptionTDG;
-import com.example.vis_projekt.Data_Access.Option_typeTDG;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Item extends Representantive{
@@ -87,7 +82,9 @@ public class Item extends Representantive{
         return item_id;
     }
 
-    public void loadOptionTypes(){
+
+    //WAS in project, but I have decided to move it to TM.
+    /*public void loadOptionTypes(){
         try(Option_typeTDG gateway = new Option_typeTDG()){
             ResultSet rs = gateway.findByItemID(this.item_id);
             if(rs != null){
@@ -113,6 +110,6 @@ public class Item extends Representantive{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
 }
