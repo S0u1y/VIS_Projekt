@@ -75,9 +75,6 @@ public class ItemPageController implements AppController{
             }
         }
 
-
-
-
     }
 
     @Override

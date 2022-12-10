@@ -84,6 +84,7 @@ public class Item extends Representantive{
 
 
     //WAS in project, but I have decided to move it to TM.
+    //Reasoning is because of the cyclic relation it had..
     /*public void loadOptionTypes(){
         try(Option_typeTDG gateway = new Option_typeTDG()){
             ResultSet rs = gateway.findByItemID(this.item_id);
