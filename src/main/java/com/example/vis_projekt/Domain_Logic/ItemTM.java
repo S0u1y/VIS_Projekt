@@ -64,23 +64,26 @@ public class ItemTM {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        if(item.getOptions() != null && !item.getOptions().isEmpty()){
+            try(OptionTDG gateway = new OptionTDG()){
 
-        try(OptionTDG gateway = new OptionTDG()){
-
-            for(Option_type type : item.getOptions()){
-                ResultSet rs = gateway.findByOptionTypeID(type.getCategory_id());
-                while(rs.next()){
-                    type.addOption(new Option(rs.getInt("Option_ID"), type.getCategory_id(), rs.getString("Description"), rs.getDouble("Price")));
+                for(Option_type type : item.getOptions()){
+                    ResultSet rs = gateway.findByOptionTypeID(type.getCategory_id());
+                    while(rs.next()){
+                        type.addOption(new Option(rs.getInt("Option_ID"), type.getCategory_id(), rs.getString("Description"), rs.getDouble("Price")));
+                    }
                 }
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            for(Option_type type : item.getOptions()){
+                type.getOptions().add(0, new Option());
+            }
         }
 
-        for(Option_type type : item.getOptions()){
-            type.getOptions().add(0, new Option());
-        }
+
 
     }
 
