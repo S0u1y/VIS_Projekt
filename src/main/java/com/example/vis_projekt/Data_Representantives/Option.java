@@ -5,7 +5,7 @@ public class Option {
     private int option_type_id;
 
     private String description;
-    private double price;
+    private double price = 0;
 
     public Option() {
         option_id = -1;

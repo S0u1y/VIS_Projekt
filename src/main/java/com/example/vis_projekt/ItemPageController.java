@@ -4,6 +4,7 @@ import com.example.vis_projekt.Data_Access.ItemTDG;
 import com.example.vis_projekt.Data_Representantives.Item;
 import com.example.vis_projekt.Data_Representantives.Option;
 import com.example.vis_projekt.Data_Representantives.Option_type;
+import com.example.vis_projekt.Domain_Logic.ItemTM;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -34,6 +35,8 @@ public class ItemPageController implements AppController{
 
     private Item item;
 
+    private ItemTM itemModule = new ItemTM();
+
     private double currentPrice = 0;
 
     @Override
@@ -60,10 +63,12 @@ public class ItemPageController implements AppController{
             if(item.getOptions() == null || item.getOptions().isEmpty()){
                 item.loadOptionTypes();
                 item.loadOptions();
+                for(Option_type type : item.getOptions()){
+                    type.getOptions().add(0, new Option());
+                }
             }
             for(Option_type type : item.getOptions()){
                 ComboBox<Option> box = new ComboBox<>();
-                box.getItems().add(new Option());
                 box.setPromptText(type.getDescription());
 
                 for(Option option : type.getOptions()){
@@ -72,20 +77,9 @@ public class ItemPageController implements AppController{
 
                 box.setOnAction(event -> {
 
-                    for(Node node : sideBox.getChildren()){
-                        if(node instanceof ComboBox<?> check){
-                            if(check.getValue() == null && check.getId() != null){
-                                currentPrice -= Double.parseDouble(check.getId());
-                            }else{
-                                if(check.getId() != null && check == box){
-                                    currentPrice -= Double.parseDouble(box.getId());
-                                }
-                            }
-                        }
-                    }
-                    currentPrice += box.getValue().getPrice();
-                    box.setId(""+box.getValue().getPrice());
-                    priceLabel.setText("Price: " + (item.getPrice() + currentPrice));
+                    currentPrice = itemModule.calculateValue(item, box.getValue());
+
+                    priceLabel.setText("Price: " + (currentPrice));
                 });
 
                 sideBox.getChildren().add(2,box);
@@ -108,20 +102,10 @@ public class ItemPageController implements AppController{
     }
 
     @FXML
-    private void onPurchaseButton(){
-        Item purchased = new Item(item.getItem_id(), item.getUser_id(), item.getName(), item.getPrice(), item.getDescription());
-        for(Node node : sideBox.getChildren()){
-            if(node instanceof ComboBox<?> box){
-                if(box.getValue() != null && box.getId() != null){
-                    Option option = (Option)box.getValue();
-                    Option_type type = new Option_type(option.option_type_id(), item.getId(), box.getPromptText());
-                    type.addOption(option);
-                    purchased.getOptions().add(type);
-                }
-            }
-        }
-        if(MainClass.cart == null) MainClass.cart = new Cart();
-        MainClass.cart.addItem(purchased);
+    private void onPurchaseButton(){ //call ItemTM module.purchase
+
+        itemModule.purchaseItem(item, sideBox);
+
     }
 
     @FXML

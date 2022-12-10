@@ -19,7 +19,10 @@ public class UserTM {
                 errorMessage = "Password cannot be blank!";
             }else{
                 gateway.createUser(address, store, name, surname, email, Encoding.Hash(password));
-                output = new User(name,surname,email);
+                ResultSet rs = gateway.findByEmail(email);
+                if(rs.next()){
+                    output = new User(rs.getInt("User_ID") ,name,surname,email);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -43,7 +46,10 @@ public class UserTM {
                 errorMessage = "User already exists!";
             }else{
                 gateway.createUser(address, store, name, surname, email, Encoding.Hash(password));
-                output = new User(name,surname,email);
+                ResultSet rs = gateway.findByEmail(email);
+                if(rs.next()){
+                    output = new User(rs.getInt("User_ID") ,name,surname,email);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -68,7 +74,7 @@ public class UserTM {
             if(rs != null && rs.next()){
                 cmpPass = rs.getString("Password");
                 if(cmpPass.equals(hashPass)){
-                    output = new User(rs.getString("Name"),rs.getString("Surname"),rs.getString("Email"));
+                    output = new User(rs.getInt("User_ID"),rs.getString("Name"),rs.getString("Surname"),rs.getString("Email"));
                 }
             }
         } catch (SQLException e) {

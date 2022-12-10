@@ -1,20 +1,17 @@
 package com.example.vis_projekt;
 
+import com.example.vis_projekt.Data_Access.PaymentTDG;
 import com.example.vis_projekt.Data_Representantives.Item;
 import com.example.vis_projekt.Data_Representantives.Option;
 import com.example.vis_projekt.Data_Representantives.Option_type;
-import com.example.vis_projekt.Object_relations.PaymentUOW;
 
 import java.util.ArrayList;
 
 public class Cart {
 
-
     private double totalPrice;
     private double coupon = 1;
     private ArrayList<Item> items = new ArrayList<>();
-
-    private PaymentUOW uow = new PaymentUOW();
 
     public double getTotalPrice() {
         return totalPrice;
@@ -54,6 +51,23 @@ public class Cart {
     }
 
     public void checkout(){
+
+        for(Item item : items){
+
+            try(PaymentTDG PGateway = new PaymentTDG()){
+
+                double finalItemPrice = item.getPrice();
+                for(Option_type type : item.getOptions()){
+                    for(Option option : type.getOptions()){
+                        finalItemPrice += option.getPrice();
+                    }
+                }
+
+                PGateway.create(MainClass.user.getUser_id(), item.getItem_id(), finalItemPrice * coupon);
+
+            }
+
+        }
 
     }
 
